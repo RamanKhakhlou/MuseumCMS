@@ -1,0 +1,1 @@
+<?	if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] == "POST")		{			$id = CleanData($_POST['selectedKingdom'], 'i');			//Удаление царства			DeleteFromTableById("carstva", $id);			header("Location: index.php?actionDelete=delete_kingdom");		}	}?>

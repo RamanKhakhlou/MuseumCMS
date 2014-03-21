@@ -1,0 +1,1 @@
+<?	if(isset($_SESSION['name']))	{			if($_SERVER['REQUEST_METHOD'] == "POST")		{			//Обработка данных			$id = CleanData($_POST['selectedSpecies'], 'i');			//Удаление вида			DeleteFromTableById("vid", $id);			header("Location: index.php?actionDelete=delete_species");		}		}?>

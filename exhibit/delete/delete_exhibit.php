@@ -1,0 +1,1 @@
+<?	if($_SESSION['name'])	{		if($_SERVER['REQUEST_METHOD'] == "POST")		{			//Обработка данных			$id = CleanData($_POST['selectedExhibit'], 'i');			//Удаление экспоната			DeleteFromTableById("eksponat", $id);			header("Location: index.php?actionDelete=delete_exhibit");		}	}?>

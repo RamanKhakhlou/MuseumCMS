@@ -1,0 +1,1 @@
+<?	if(isset($_SESSION['name']))	{			if($_SERVER['REQUEST_METHOD'] == "POST")		{			//Обработка данных			$id = CleanData($_POST['selectedType'], 'i');			//Удаление типа			DeleteFromTableById("tip", $id);			header("Location: index.php?actionDelete=delete_type");		}		}?>

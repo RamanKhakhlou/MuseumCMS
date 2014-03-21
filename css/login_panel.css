@@ -1,0 +1,158 @@
+body{
+margin: 0;
+
+}
+
+.wrapper{
+width: 100%;
+height:100%;
+overflow: auto;
+min-height: 500px;
+min-width: 1000px;
+
+/* Градиентная заливка фона */
+background: #66EE33; /* для браузеров без css3 */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEFF99', endColorstr='#66EE33'); /* для IE */
+background: -webkit-gradient(linear, left top, left bottom, from(#EEFF99), to(#66EE33)); /* для webkit */
+background: -o-linear-gradient(top,  #EEFF99,  #66EE33); /* Opera 11.10+ */
+background: -moz-linear-gradient(top, #EEFF99 0%, #66EE33 100%); /* для firefox 3.6+ */
+}
+
+.main{
+background-color: #F5F5F5; 
+border-radius:4px; 
+width: 240px;
+height: 170px;
+padding: 20px;
+position:absolute;
+left:50%;
+top:40%;
+margin-top: -100px;
+margin-left: -120px;
+/* Тень для блока*/
+-webkit-box-shadow: #666 0px 2px 30px;
+-moz-box-shadow: #666 0px 2px 30px;
+box-shadow: #666 0px 2px 30px;
+}
+
+.avt{
+font-weight: bold;
+font-size: 17px;
+font-family: Palatino Linotype;
+}
+
+
+.hrs{
+margin: 18px 0;
+border: 0;
+border-top: 1px solid #DFDFDF;
+border-bottom: 1px solid white;
+}
+
+.inp{
+background-color: white;
+border: 1px solid #CCC;
+box-shadow: 0 0 1px 3px #F0F0F0;
+border-radius: 3px;
+height: 28px;
+width: 240px;
+padding: 4px 5px;
+margin-bottom: 15px;
+}
+
+#log{
+
+}
+
+#log:focus{
+background-color:#F0F0F0;
+}
+
+#pas{
+
+}
+
+#pas:focus{
+background-color:#F0F0F0;
+}
+
+
+.smart_input {
+    position: relative;
+    vertical-align: top;
+}
+.smart_input label {
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    display: none;
+    cursor: text;
+    font-size: 14px;
+    font-family: Arial;
+    color: #AAAAAA;
+	margin-top: 6px;
+  }
+
+.btn{
+	display: block; 
+	width: 80px; 
+	height: 30px;
+	margin-left: 160px;	
+	background: #398525; /* old browsers */
+	background: -moz-linear-gradient(top, #8DD297 0%, #398525 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8DD297), color-stop(100%,#398525)); /* webkit */
+	background: -o-linear-gradient(top,  #8DD297,  #398525); /* Opera 11.10+ */
+	
+	box-shadow: inset 0px 0px 6px #fff;
+	-webkit-box-shadow: inset 0px 0px 6px #fff;
+	
+	border: 1px solid #5ea617;
+	border-radius: 6px;
+	
+	font: bold 15px Helvetica, Sans-Serif; 
+	text-align: center;
+	text-transform: uppercase; 
+	text-decoration: none;
+	color: #147032;
+	text-shadow: 0px 1px 2px #b4d1ad;
+	-moz-transition: color 0.25s ease-in-out;
+	-webkit-transition: color 0.25s ease-in-out;
+	transition: color 0.25s ease-in-out;	
+	
+	
+}
+.btn:hover {
+	color: #145675;
+	-moz-transition: color 0.25s ease-in-out;
+	-webkit-transition: color 0.25s ease-in-out;
+	transition: color 0.25s ease-in-out;
+	}
+	
+.pull-left {
+	float: left;
+	position: absolute; /* Абсолютное позиционирование */
+    bottom: 15px; /* Положение от нижнего края */
+    left: 15px; /* Положение от правого края */
+	
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: bold;
+	color: #134D00;
+}
+
+.pull-left:link{
+	text-decoration: none;
+}
+
+.pull-left:visited{
+	text-decoration: none;
+}
+
+.pull-left:hover{
+	text-decoration: underline;
+}
+
+.pull-left:active{
+	text-decoration: underline;
+}
