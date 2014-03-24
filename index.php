@@ -7,7 +7,6 @@
 	//Производит авторизацию
 	include("blocks/autorisation.inc.php");
 	$actionAdd = $_GET['actionAdd'];
-	$actionChangeAll = $_GET['actionChangeAll'];
 	$actionChange = $_GET['actionChange'];
 	$actionDelete = $_GET['actionDelete'];
 ?>
@@ -38,20 +37,16 @@
 								{
 									include("blocks/add/{$actionAdd}.php");
 								}
-								if(isset($actionChangeAll))
-								{
-									include("exhibit/change/{$actionChangeAll}_all.php");
-								}
 								if(isset($actionChange))
 								{
-									include("exhibit/change/{$actionChange}_form.php");
+									include("blocks/change/{$actionChange}.php");
 								}
 								if(isset($actionDelete))
 								{
 									include("exhibit/delete/{$actionDelete}_form.php");
 								}
 								//TODO: Add checking for 404
-								if(!isset($actionAdd) && !isset($actionChange) && !isset($actionDelete) && !isset($actionChangeAll))
+								if(!isset($actionAdd) && !isset($actionChange) && !isset($actionDelete))
 								{
 							?>
 									<div id="search_wrapper">

@@ -13,13 +13,15 @@
 				//Добавление нового царства в БД
 				$result = AddKingdom($nameRus, $nameLat, $description);
 				
-				if($result != false)
+				if(isset($result) && $result != false)
 				{
-					ShowSuccess("Запись о царстве успешно добавлена.");
+					AddSuccessMessage("Запись о царстве успешно добавлена.");
 				}
 			}
 			//Вывод ошибок
 			AddErrors($nameRus, $nameLat);
+			
+			echo "<script>museum.redirect('Add', 'add_kingdom');</script>";
 		}
 	}
 ?>
@@ -34,7 +36,11 @@
 <?
 	if(isset($_SESSION['name']))
 	{
-		ShowErrors($errors);
+		if($_SERVER['REQUEST_METHOD'] != "POST")
+		{
+			ShowErrors();
+			ShowSuccessMessage();
+		}
 ?>
 		<form action = "index.php?actionAdd=add_kingdom" method = "POST" name = "addition">
 			<div id='cont'>

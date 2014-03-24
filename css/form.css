@@ -64,7 +64,6 @@
 	font-size: 15px;
 }
 
-
 .buttonw{
 	border:1px solid #f4f4f4;
 	border-radius:  5px;
@@ -76,12 +75,12 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
 	margin: 10px;
 	color: #00560E;
-
 	-moz-transition: color 1s ease-in-out, background 1s ease-in-out;
 	-webkit-transition: color 1s ease-in-out, background 1s ease-in-out;
 	-o-transition: color 1s ease-in-out, background 1s ease-in-out;
 	transition: color 1s ease-in-out, background 1s ease-in-out;
-	}
+}
+	
 .buttonw:hover{
 	border: 1px solid #CCCCCC;
 	border-radius:  5px;
@@ -105,9 +104,10 @@
 	background: #D4FFD0;
 	border: 1px solid #D4FFD0;
 }
+
 .star{
 	color: red;
-	}
+}
 	
 .errors{
 	color: #CD0000;

@@ -1,8 +1,8 @@
 ﻿var museum = new function(){
 	//TODO: Ad styles
-	//TODO: Show message about empty arrays
 	this.search = function(){
 		var query = $("#query").val();
+		
 		if(query.length < 3){
 			alert("Query length mustn't be less than 3 char.");
 		}
@@ -14,8 +14,7 @@
 				
 					var div = $("#results").empty();
 					var searched = $.parseJSON(responce);
-					
-					console.log(searched);
+
 					if(searched.exhibits.length > 0){
 						div.append($("<div/>").text("Exhibitions: "));
 						
@@ -43,6 +42,13 @@
 					}
 				}
 			)
+		}
+	}
+	
+	//Redirects to module
+	this.redirect = function(type, action){
+		if(action){
+			document.location.href = "index.php?action" + type + "=" + action;
 		}
 	}
 }

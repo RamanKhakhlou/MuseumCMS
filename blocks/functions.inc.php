@@ -52,11 +52,11 @@
 		if($size == "")
 		{
 			$_SESSION['error'] .= "Не введен размер экспоната.<br>";
-		}		
+		}
 		if($weight == "")
 		{
 			$_SESSION['error'] .= "Не введен вес экспоната.<br>";
-		}				
+		}
 		if($passport == "")
 		{
 			$_SESSION['error'] .= "Не введен паспортный номер экспоната.<br>";
@@ -69,7 +69,14 @@
 		{
 			$_SESSION['error'] .= "Изображение должно иметь формат .jpg.<br>";
 		}
-	}	
+	}
+	
+	function AddSuccessMessage($success)
+	{
+		$_SESSION['success'] = "";
+		$_SESSION['success'] .= $success;
+	}
+	
 	//Выводит ошибку в блоке
 	function ShowErrors()
 	{
@@ -77,21 +84,26 @@
 		{
 			printf("
 				<div class='errors'>
-				<H2>Не удалось добавить запись из-за ошибок:</h2>
+				<h2>Не удалось добавить запись из-за ошибок:</h2>
 					<p>{$_SESSION['error']}</p>
-				</div>				
+				</div>
 			");
+			
+			unset($_SESSION['error']);
 		}
-		unset($_SESSION['error']);
 	}
+	
 	//Вывод сообщения об успешном завершении операции
-	function ShowSuccess($message)
+	function ShowSuccessMessage()
 	{
-		printf("
-			<div class='success'>
-				<p>" . $message . "</p>
-			</div>");
+		if(isset($_SESSION['success']))
+		{
+			printf("<div class='success'><p>{$_SESSION['success']}</p></div>");
+				
+			unset($_SESSION['success']);
+		}
 	}
+	
 	//Удаление по id из заданной таблицы
 	function DeleteFromTableById($table, $id)
 	{
@@ -105,6 +117,7 @@
 							VALUES('{$nameRus}', '{$nameLat}', '{$description}')";
 		return mysql_query($sql) or die("Не удалось добавить царство.");
 	}
+	
 	//Изменение царства
 	function ChangeKingdom($id, $nameRus, $nameLat, $description)
 	{
@@ -112,37 +125,42 @@
 								   namelat = '{$nameLat}', 
 								   opisanie = '{$description}' 
 							 WHERE id = {$id}";
-		mysql_query($sql) or die("Не удалось внести изменения.");
-	}	
+		return mysql_query($sql) or die("Не удалось внести изменения.");
+	}
+	
 	//Добавление типа(отряда)
 	function AddType($idKingdom, $nameRus, $nameLat)
 	{
 		$sql = "INSERT INTO tip (idcar, namerus, namelat) VALUES ({$idKingdom}, '{$nameRus}', '{$nameLat}')";
-		mysql_query($sql) or die("Не удалось добавить тип.");
+		return mysql_query($sql) or die("Не удалось добавить тип.");
 	}
+	
 	//Изменение типа
 	function ChangeType($id, $idKingdom, $nameRus, $nameLat)
 	{
 		$sql = "UPDATE tip SET idcar = {$idKingdom}, namerus = '{$nameRus}', namelat = '{$nameLat}' WHERE id = {$id}";
-		mysql_query($sql) or die("Не удалось внести изменения.");
+		return mysql_query($sql) or die("Не удалось внести изменения.");
 	}
+	
 	//Добавление класса
 	function AddClass($idKingdom, $idType, $nameRus, $nameLat)
 	{
 		$sql = "INSERT INTO klass (idcar, idtip, namerus, namelat) VALUES ({$idKingdom}, {$idType}, '{$nameRus}', '{$nameLat}')";
-		mysql_query($sql) or die("Не удалось добавить класс.");
+		return mysql_query($sql) or die("Не удалось добавить класс.");
 	}
+	
 	//Изменение класса
 	function ChangeClass($id, $idKingdom, $idType, $nameRus, $nameLat)
 	{
 		$sql = "UPDATE klass SET idcar = {$idKingdom}, idtip = {$idType}, namerus = '{$nameRus}', namelat = '{$nameLat}' WHERE id = {$id}";
-		mysql_query($sql) or die("Не удалось изменить класс.");
+		return mysql_query($sql) or die("Не удалось изменить класс.");
 	}
+	
 	//Добавление отряда
 	function AddDetachment($idKingdom, $idType, $idClass, $nameRus, $nameLat, $photoName = "noimage.jpg")
 	{
 		$sql = "INSERT INTO otrjad(idcar, idtip, idklass, namerus, namelat, photoname) VALUES({$idKingdom}, {$idType}, {$idClass}, '{$nameRus}', '{$nameLat}', '{$photoName}')";
-		mysql_query($sql) or die ("Не удалось добавить отряд");
+		return mysql_query($sql) or die ("Не удалось добавить отряд.");
 	}
 	//Изменение отряда
 	function ChangeDetachment($id, $idKingdom, $idType, $idClass, $nameRus, $nameLat, $photoName = "noimage.jpg")
@@ -154,7 +172,7 @@
 	function AddFamily($idKingdom, $idType, $idClass, $idDetachment, $nameRus, $nameLat)
 	{
 		$sql = "INSERT INTO semejstva(idcar, idtip, idklass, idotr, namerus, namelat) VALUES({$idKingdom}, {$idType}, {$idClass}, {$idDetachment}, '{$nameRus}', '{$nameLat}')";
-		mysql_query($sql) or die("Не удалось добавить семейство.");
+		return mysql_query($sql) or die("Не удалось добавить семейство.");
 	}
 	//Изменение семейства
 	function ChangeFamily($id, $idKingdom, $idType, $idClass, $idDetachment, $nameRus, $nameLat)
@@ -166,7 +184,7 @@
 	function AddSpecies($idKingdom, $idType, $idClass, $idDetachment, $idFamily, $nameRus, $nameLat)
 	{
 		$sql = "INSERT INTO vid(idcar, idtip, idklass, idotr, idsem, namerus, namelat) VALUES({$idKingdom}, {$idType}, {$idClass}, {$idDetachment}, {$idFamily}, '{$nameRus}', '{$nameLat}')";
-		mysql_query($sql) or die("Не удалось добавить вид.");
+		return mysql_query($sql) or die("Не удалось добавить вид.");
 	}
 	//Изменение вида
 	function ChangeSpecies($id, $idKingdom, $idType, $idClass, $idDetachment, $idFamily, $nameRus, $nameLat)
@@ -179,7 +197,7 @@
 	{
 		$sql = "INSERT INTO eksponat(vid, kol, invnom, datpost, razm, ves, ist, mtizg, mvizg, autor, hisexp, pasport, photoname) 
 							  VALUES({$idSpecies}, '{$count}', '{$inventoryNumber}', '{$dateAct}', '{$size}', '{$weight}',	'{$findHistory}', '{$makeMethod}', '{$makePlace}', '{$author}', '{$history}', {$passport}, '{$photoName}')";
-		mysql_query($sql) or die("Не удалось добавить экспонат.");
+		return mysql_query($sql) or die("Не удалось добавить экспонат.");
 	}
 	//Изменение экспоната
 	function ChangeExhibit($id, $idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight,	$findHistory, $makeMethod, $makePlace, $author, $history, $passport, $photoName = "noimage.jpg")

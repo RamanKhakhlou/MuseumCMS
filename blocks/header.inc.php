@@ -6,70 +6,59 @@
 			<div id='nav'>
 			<ul>
 				<li><a href="">Сайт</a></li>
+				<!--TODO: Rename point "Exhibition"-->
 				<li><a href="">Экспонаты</a>
 					<ul>
 						<li><a href="">Царство</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_kingdom'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_kingdom'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_kingdom_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_kingdom'>Удаление</a></li>
 							</ul>
 						</li>
 						<li><a href="">Тип</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_type'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_type'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_type_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_type'>Удаление</a></li>
-							</ul>
-						</li>
-						<li><a href="">Экспонат</a>
-							<ul>
-								<li><a href='index.php?actionAdd=add_exhibit'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_exhibit'>Изменение</a></li>
-								<li><a href='index.php?actionDelete=delete_exhibit'>Удаление</a></li>
 							</ul>
 						</li>
 						<li><a href="">Класс</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_class'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_class'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_class_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_class'>Удаление</a></li>
 							</ul>
 						</li>
 						<li><a href="">Отряд</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_detachment'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_detachment'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_detachment_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_detachment'>Удаление</a></li>
 							</ul>
 						</li>
 						<li><a href="">Семейство</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_family'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_family'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_family_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_family'>Удаление</a></li>
 							</ul>
 						</li>
 						<li><a href="">Вид</a>
 							<ul>
 								<li><a href='index.php?actionAdd=add_species'>Добавление</a></li>
-								<li><a href='index.php?actionChangeAll=change_species'>Изменение</a></li>
+								<li><a href='index.php?actionChange=change_species_all'>Изменение</a></li>
 								<li><a href='index.php?actionDelete=delete_species'>Удаление</a></li>
 							</ul>
 						</li>
+						<li><a href="">Экспонат</a>
+							<ul>
+								<li><a href='index.php?actionAdd=add_exhibit'>Добавление</a></li>
+								<li><a href='index.php?actionChange=change_exhibit_all'>Изменение</a></li>
+								<li><a href='index.php?actionDelete=delete_exhibit'>Удаление</a></li>
+							</ul>
+						</li>
 					</ul>	
-				</li>
-				<li><a href="">Пользователи</a>
-					<ul>
-						<li><a href="index.php?actionAdd=add_user">Добавить</a><li>
-						<li><a href="index.php?actionDelete=delete_user">Удалить</a><li>
-					</ul>
-				</li>
-				<li><a href="">Галерея</a>
-					<ul>
-						<li><a href="index.php?actionAdd=add_photo">Добавить фото</a><li>
-						<li><a href="index.php?actionDelete=delete_photo">Удалить фото</a><li>
-					</ul>
 				</li>
 				<li><a href="">Новости</a>
 					<ul>
@@ -78,9 +67,21 @@
 						<li><a href='index.php?actionDelete=delete_news'>Удаление</a></li>
 					</ul>
 				</li>
+				<li><a href="">Галерея</a>
+					<ul>
+						<li><a href="index.php?actionAdd=add_photo">Добавить фото</a><li>
+						<li><a href="index.php?actionDelete=delete_photo">Удалить фото</a><li>
+					</ul>
+				</li>				
 				<li><a href="">История</a>
 					<ul>
 						<li><a href='index.php?actionChangeAll=change_history'>Редактирование</a></li>
+					</ul>
+				</li>
+				<li><a href="">Пользователи</a>
+					<ul>
+						<li><a href="index.php?actionAdd=add_user">Добавить</a><li>
+						<li><a href="index.php?actionDelete=delete_user">Удалить</a><li>
 					</ul>
 				</li>
 			</ul>
