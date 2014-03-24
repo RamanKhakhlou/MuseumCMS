@@ -10,22 +10,12 @@
 	$actionChangeAll = $_GET['actionChangeAll'];
 	$actionChange = $_GET['actionChange'];
 	$actionDelete = $_GET['actionDelete'];
-	if(isset($actionAdd))
-	{
-		include("exhibit/add/{$actionAdd}.php");
-	}
-	if(isset($actionChange))
-	{
-		include("exhibit/change/{$actionChange}_make.php");
-	}
-	if(isset($actionDelete))
-	{
-		include("exhibit/delete/{$actionDelete}.php");
-	}	
 ?>
 <html>
 	<head>
 		<link href="css/style.css" type="text/css" rel="stylesheet">
+		<script src="scripts/jquery-1.9.1.min.js"></script>
+		<script src="scripts/museum.js"></script>
 		<title>Панель управления</title>
 	</head>
 	<body>
@@ -41,12 +31,12 @@
 		?>
 				<div class='wrapper'>
 					<div id="stroke">
-						<div id="up_part">								
-							<?			
-								include("blocks/header.inc.php");	
+						<div id="up_part">
+							<?
+								include("blocks/header.inc.php");
 								if(isset($actionAdd))
 								{
-									include("exhibit/add/{$actionAdd}_form.php");
+									include("blocks/add/{$actionAdd}.php");
 								}
 								if(isset($actionChangeAll))
 								{
@@ -60,53 +50,23 @@
 								{
 									include("exhibit/delete/{$actionDelete}_form.php");
 								}
+								//TODO: Add checking for 404
 								if(!isset($actionAdd) && !isset($actionChange) && !isset($actionDelete) && !isset($actionChangeAll))
 								{
-							?>				
-									<ul>
-										<li>
-											<h1>Работа с экспонатами</h1>		
-											<ul>
-												<li><a href = "exhibit/add/add_all.php">Добавление</a><li>
-												<li><a href = "exhibit/change/change_all.php">Изменение</a><li>
-												<li><a href = "exhibit/delete/delete_all.php">Удаление</a><li>
-											</ul>
-										</li>
-										<li>
-											<h1>Работа с контентом</h1>		
-											<ul>
-												<li><a href = "#">Добавление</a><li>
-												<li><a href = "#">Изменение</a><li>
-												<li><a href = "#">Удаление</a><li>
-											</ul>
-										</li> 
-									</ul>
+							?>
+									<div id="search_wrapper">
+										<input type="text" name="query" id="query">
+										<input type="button" name="search" id="search" value="Search" onclick="museum.search()">
+										<div id="results"></div>
+									</div>
 							<?
-								}								
+								}
 							?>
 						</div>
 					</div>
-				</div>					
-			<?
-				if($_SESSION['privileges'] == 1)
-				{
-			?>
-					<!-- 
-					<li>
-						<h1>Работа с пользователями</h1>		
-						<ul>
-							<li><a href = "#">Добавление</a><li>
-							<li><a href = "#">Изменение</a><li>
-							<li><a href = "#">Удаление</a><li>
-						</ul>
-					</li>
-					-->
-			<?
-				}
-			?>
-				<!-- </ul> -->
+				</div>
  		<?
-			}			
+			}
 			mysql_close();
 		?>	
 	</body>

@@ -14,7 +14,6 @@
 			{
 				//Создание переменных в сессии
 				$_SESSION['name'] = $name;
-				$_SESSION['privileges'] = $rowUser['stat'];	
 				header("LOCATION:".$_SERVER['PHP_SELF']);
 			}
 		}

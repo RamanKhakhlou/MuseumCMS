@@ -84,18 +84,13 @@
 		}
 		unset($_SESSION['error']);
 	}
-	//Вывод сообщения об успешном добавлении
-	function ShowSuccess()
-	{		
-		if($_SESSION['success'] == "success")
-		{
-			printf("
-				<div style = 'border: 1px double black; background-color: green; border-radius: 10px;'>
-					<p>Успешно добавленно!</p>
-				</div>				
-			");
-		}
-		unset($_SESSION['success']);
+	//Вывод сообщения об успешном завершении операции
+	function ShowSuccess($message)
+	{
+		printf("
+			<div class='success'>
+				<p>" . $message . "</p>
+			</div>");
 	}
 	//Удаление по id из заданной таблицы
 	function DeleteFromTableById($table, $id)
@@ -108,7 +103,7 @@
 	{
 		$sql = "INSERT INTO carstva(namerus, namelat, opisanie) 
 							VALUES('{$nameRus}', '{$nameLat}', '{$description}')";
-		mysql_query($sql) or die("Не удалось добавить царство.");
+		return mysql_query($sql) or die("Не удалось добавить царство.");
 	}
 	//Изменение царства
 	function ChangeKingdom($id, $nameRus, $nameLat, $description)
