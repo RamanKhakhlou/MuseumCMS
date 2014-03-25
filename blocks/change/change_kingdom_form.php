@@ -53,11 +53,11 @@
 						<table>
 							<tr class='asdasd'>
 								<td class='number1'>Русское название царства<span class='star'>*</span></td>
-								<td><input type = "text" name = "nameRus" class='ttext' value = "<?= $rowKingdom["namerus"]?>"></td>
+								<td><input type = "text" name = "nameRus" class='ttext' value = "<?= $rowKingdom["namerus"]?>" required></td>
 							</tr>
 							<tr class='asdasd'>
 								<td class='number1'>Латинское название царства<span class='star'>*</span></td>
-								<td><input type = "text" name = "nameLat" class='ttext' value = "<?= $rowKingdom["namelat"]?>"></td>
+								<td><input type = "text" name = "nameLat" class='ttext' value = "<?= $rowKingdom["namelat"]?>" required></td>
 							</tr>
 							<tr class='asdasd'>
 								<td class='number1'>Описание царства</td>

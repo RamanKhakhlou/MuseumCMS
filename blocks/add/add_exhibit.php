@@ -93,7 +93,7 @@
 				<legend><span class='legend'>Добавление экспоната</span></legend>
 				<table>
 					<tr class='asdasd'>
-						<td class='number1'>Вид<span class='star'>*</span></td>
+						<td class='number1'>Вид</td>
 						<td><select name = "selectedSpecies" class='ttext'>
 							<?
 								while($rowSpecies = mysql_fetch_assoc($resultSpecies))
@@ -106,27 +106,27 @@
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Количество<span class='star'>*</span></td>
-						<td><input type = "text" name = "count" class='ttext'></td>
+						<td><input type = "text" name = "count" class='ttext' required></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Инвентарный номер<span class='star'>*</span></td>
-						<td><input type = "text" name = "inventoryNumber" class='ttext'></td>
+						<td><input type = "text" name = "inventoryNumber" class='ttext' required></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Дата поступления<span class='star'>*</span></td>
-						<td><input type = "text" name = "dateAct" class='ttext'>	</td>
+						<td><input type = "text" name = "dateAct" class='ttext' required></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Размер<span class='star'>*</span></td>
-						<td><input type = "text" name = "size" class='ttext'></td>
+						<td><input type = "text" name = "size" class='ttext' required></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Вес<span class='star'>*</span></td>
-						<td><input type = "text" name = "weight" class='ttext'></td>
+						<td><input type = "text" name = "weight" class='ttext' required></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Паспортный номер<span class='star'>*</span></td>
-						<td><input type = "text" name = "passport" class='ttext'>	</td>
+						<td><input type = "text" name = "passport" class='ttext' required pattern="\d{1,6}"></td>
 					</tr>
 					<tr class='asdasd'>
 						<td class='number1'>Автор</td>

@@ -51,4 +51,16 @@
 			document.location.href = "index.php?action" + type + "=" + action;
 		}
 	}
+	
+	//Checks or unchecks all checkboxes
+	this.checkAll = function(e){
+		var checkbox = $(e);
+		
+		if(checkbox[0].checked){
+			$("input[type='checkbox']").prop("checked", true);
+		}
+		else{
+			$("input[type='checkbox']").removeAttr("checked");
+		}
+	}
 }

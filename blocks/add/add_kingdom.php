@@ -49,11 +49,11 @@
 				<table>
 				<tr tr class='asdasd'>
 					<td class='number1'>Русское название царства<span class='star'>*</span></td>
-					<td><input type = "text" name = "nameRus" class='ttext'></td>
+					<td><input type = "text" name = "nameRus" class='ttext' required></td>
 				</tr>
 				<tr tr class='asdasd'>
 					<td class='number1'>Латинское название царства<span class='star'>*</span></td>
-					<td><input type = "text" name = "nameLat" class='ttext'></td>
+					<td><input type = "text" name = "nameLat" class='ttext' required></td>
 				</tr>
 				<tr tr class='asdasd'>
 					<td class='number1'>Краткое описание</td>

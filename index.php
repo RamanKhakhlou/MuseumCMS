@@ -43,9 +43,9 @@
 								}
 								if(isset($actionDelete))
 								{
-									include("exhibit/delete/{$actionDelete}_form.php");
+									include("blocks/delete/{$actionDelete}.php");
 								}
-								//TODO: Add checking for 404
+								//TODO: Add including 404
 								if(!isset($actionAdd) && !isset($actionChange) && !isset($actionDelete))
 								{
 							?>
