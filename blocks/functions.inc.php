@@ -71,6 +71,58 @@
 		}
 	}
 	
+	function AddErrorsForNews($news)
+	{
+		$error = "";
+		
+		if($news == "")
+		{
+			$error = "Не введен текст новости";
+		}
+		$_SESSION['error'] = $error;
+		
+		return $error != "";
+	}
+	
+	//Проверяет на наличие ошибок при добавлении пользователя
+	function AddErrorsForUsers($login, $password, $confirm, $name)
+	{
+		$error = "";
+		
+		if($login == "")
+		{
+			$error .= "Не введен логин.<br>";
+		}
+		if(IsUserExist($login))
+		{
+			$error .= "Пользователь с таким именем уже существует.<br>";
+		}
+		if($password == "")
+		{
+			$error .= "Не введен пароль.<br>";
+		}
+		if($confirm == "")
+		{
+			$error .= "Пароль не подтвержден.<br>";
+		}
+		if($password != $confirm)
+		{
+			$error .= "Пароли не совпадают.<br>";
+		}
+		
+		$_SESSION['error'] = $error;
+		
+		return $error != "";
+	}
+	
+	function IsUserExist($login)
+	{
+		$sql = "SELECT COUNT(*) FROM user WHERE login = '{$login}'";
+		$count = mysql_query($sql) or die("Не удалось извлечь пользователей.");
+		
+		return mysql_result($count, 0) > 0;
+	}
+	
 	function AddSuccessMessage($success)
 	{
 		$_SESSION['success'] = "";
@@ -214,5 +266,33 @@
 		$sql = "UPDATE eksponat 
 				SET vid = {$idSpecies}, kol = '{$count}', invnom = '{$inventoryNumber}', datpost = '{$dateAct}', razm = '{$size}', ves = '{$weight}', ist = '{$findHistory}', mtizg = '{$makeMethod}', mvizg = '{$makePlace}', autor = '{$author}', hisexp = '{$history}', pasport = {$passport}, photoname = '{$photoName}' WHERE id = {$id}";
 		return mysql_query($sql) or die("Не удалось изменить экспонат");
+	}
+	
+	//Добавление новости
+	function AddNews($news)
+	{
+		$sql = "INSERT INTO news(news)
+					   VALUES ('{$news}')";
+		
+		return mysql_query($sql) or die("Не удалось добавить новость");
+	}
+	
+	function ChangeNews($id, $news)
+	{
+		$sql = "UPDATE news SET news = '{$news}' 
+							WHERE id = {$id}";
+		
+		return mysql_query($sql) or die("Не удалось отредактировать новость");
+	}
+	
+	//Добавление нового пользователя
+	function AddUser($login, $password, $name)
+	{
+		$password = md5($password);
+		
+		$sql = "INSERT INTO user(login, pass, name)
+					   VALUES('{$login}', '{$password}', '{$name}');";
+		  
+		return mysql_query($sql) or die("Не удалось добавить нового пользователя.");
 	}
 ?>

@@ -1,21 +1,17 @@
 <?
-	//Извлечение всех пользователей из БД
-	$resultUsers = mysql_query("SELECT login, pass, stat FROM user") or die("Не удалось считать данные из базы");
-
 	//Проверяет, переданы ли данные из формы
 	if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Войти" && !isset($_SESSION['name']))
 	{
 		$name = CleanData($_POST['name']);
-		$password = CleanData($_POST['password']);
-		while($rowUser = mysql_fetch_assoc($resultUsers))
+		$password = md5(CleanData($_POST['password']));
+		
+		$sql = "SELECT COUNT(*) FROM user WHERE login = '{$name}' AND pass = '{$password}'" or die("Не удалось извлечь пользователей.");;
+		$count = mysql_query($sql);
+		
+		if(mysql_result($count, 0) > 0)
 		{
-			//Проверка совпадения пользователя и его пароля
-			if($rowUser['login'] == $name && $rowUser['pass'] == $password)
-			{
-				//Создание переменных в сессии
-				$_SESSION['name'] = $name;
-				header("LOCATION:".$_SERVER['PHP_SELF']);
-			}
+			$_SESSION['name'] = $name;
+			header("LOCATION:".$_SERVER['PHP_SELF']);
 		}
 	}
 	//Осуществляет выход из учетной записи пользователя

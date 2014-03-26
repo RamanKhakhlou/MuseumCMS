@@ -63,7 +63,7 @@
 				<li><a href="">Новости</a>
 					<ul>
 						<li><a href='index.php?actionAdd=add_news'>Добавление</a></li>
-						<li><a href='index.php?actionChangeAll=change_news'>Изменение</a></li>
+						<li><a href='index.php?actionChange=change_news_all'>Изменение</a></li>
 						<li><a href='index.php?actionDelete=delete_news'>Удаление</a></li>
 					</ul>
 				</li>
@@ -73,14 +73,15 @@
 						<li><a href="index.php?actionDelete=delete_photo">Удалить фото</a><li>
 					</ul>
 				</li>				
-				<li><a href="">История</a>
+				<li><a href="">Страницы</a>
 					<ul>
-						<li><a href='index.php?actionChangeAll=change_history'>Редактирование</a></li>
+						<li><a href='index.php?actionChange=change_page_all'>Редактирование</a></li>
 					</ul>
 				</li>
 				<li><a href="">Пользователи</a>
 					<ul>
 						<li><a href="index.php?actionAdd=add_user">Добавить</a><li>
+						<li><a href="index.php?actionChange=change_user">Редактировать</a><li>
 						<li><a href="index.php?actionDelete=delete_user">Удалить</a><li>
 					</ul>
 				</li>

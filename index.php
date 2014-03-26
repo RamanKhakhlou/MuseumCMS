@@ -48,13 +48,13 @@
 								//TODO: Add including 404
 								if(!isset($actionAdd) && !isset($actionChange) && !isset($actionDelete))
 								{
-							?>
-									<div id="search_wrapper">
-										<input type="text" name="query" id="query">
-										<input type="button" name="search" id="search" value="Search" onclick="museum.search()">
-										<div id="results"></div>
-									</div>
-							<?
+									?>
+										<div id="search_wrapper">
+											<input type="text" name="query" id="query">
+											<input type="button" name="search" id="search" value="Search" onclick="museum.search()">
+											<div id="results"></div>
+										</div>
+									<?
 								}
 							?>
 						</div>
