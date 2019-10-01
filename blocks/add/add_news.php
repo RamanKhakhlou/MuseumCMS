@@ -1,22 +1,18 @@
 <?
-	//Выполняется добавление при передаче методом Post
 	if(isset($_SESSION['name']))
 	{
-		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Добавить")
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Р”РѕР±Р°РІРёС‚СЊ")
 		{
 			$news = CleanData($_POST['news']);
-			//Если основные поля заполнены
 			if($news != "")
 			{
-				//Добавление нового царства в БД
 				$result = AddNews($news);
 				
 				if(isset($result) && $result != false)
 				{
-					AddSuccessMessage("Запись о новости успешно добавлена.");
+					AddSuccessMessage("Р—Р°РїРёСЃСЊ Рѕ РЅРѕРІРѕСЃС‚Рё СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.");
 				}
 			}
-			//Вывод ошибок
 			AddErrorsForNews($news);
 ?>
 			<script>museum.redirect('Add', 'add_news');</script>";
@@ -24,11 +20,11 @@
 		}
 	}
 ?>
-<div id='titlesus'>
+<div class='info'>
 <table>
 	<tr>
 		<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
-		<td><span class='titlesus_h'>Менеджер новостей: добавить новость</span></td>
+		<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ РЅРѕРІРѕСЃС‚РµР№: РґРѕР±Р°РІРёС‚СЊ РЅРѕРІРѕСЃС‚СЊ</span></td>
 	</tr>
 </table>
 </div>
@@ -42,17 +38,17 @@
 		}
 ?>
 		<form action = "index.php?actionAdd=add_news" method = "POST" name = "addition">
-			<div id='cont'>
-				<fieldset class='fs'>
-					<legend><span class='legend'>Добавление новость</span></legend>
+			<div class='form'>
+				<fieldset class='form__fieldset'>
+					<legend><span class='form__legend'>Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕСЃС‚СЊ</span></legend>
 					<table>
-						<tr tr class='asdasd'>
-							<td class='number1'>Текст новости<span class='star'>*</span></td>
-							<td><textarea name = "news" class="tarea" required></textarea></td>
+						<tr tr class='form__row'>
+							<td class='form__label'>РўРµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё<span class='form__star'>*</span></td>
+							<td><textarea name = "news" class="form__area" required></textarea></td>
 						</tr>
 					</table>
 				</fieldset>
-			<input type = "submit" value = "Добавить" name = "add" class="buttonw">
+			<input type = "submit" value = "Р”РѕР±Р°РІРёС‚СЊ" name = "add" class='form__button'>
 		</form>
 		</div>
 <?	

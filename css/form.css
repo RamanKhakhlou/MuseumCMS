@@ -1,11 +1,4 @@
-#cont{
-	border: 1px solid #CCCCCC;
-	margin: 10px;
-	padding: 10px;
-	border-radius: 10px;
-}
-
-#titlesus{
+.info {
 	margin: 10px;
 	padding: 10px;
 	border: 1px solid #CCCCCC;
@@ -13,7 +6,7 @@
 	background: #F4F4F4;
 }
 
-.titlesus_h{
+.info__title {
 	margin: 0;
 	color: #146295;
 	font-size: 22px;
@@ -21,30 +14,37 @@
 	font-weight: bold;
 }
 
-.add_data{
-	}
+.form {
+	border: 1px solid #CCCCCC;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 10px;
+}
 
-.ttext{
+.form__input {
 	width: 350px;
 	padding: 3px;
 }
 
-.tarea{
+.form__area {
 	width: 350px;
 	height: 60px;
 	max-height: 60px;
 	max-width: 350px;
 	padding: 3px;
-}	
+}
 
-.fs{
+.form__area--small {
+	height:70px;
+}
+
+.form__fieldset {
 	border-radius: 10px;
 	border: 1px solid #CCCCCC;
 	width: 650px;
-
 }
 
-.number1{
+.form__label {
 	width: 300px;
 	padding: 0 12px 0 0;
 	margin: 0 12px 0 0;
@@ -54,25 +54,22 @@
 	margin-left: 10px;
 	padding: 10px;
 }
-.number11{
-	height:70px;
-}
 
-.legend{
+.form__legend {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #146295;
 	font-size: 15px;
 }
 
-.buttonw{
+.form__button {
 	border:1px solid #f4f4f4;
 	border-radius:  5px;
 	width: 100px;
 	height: 30px;
 	font-weight: bold;
-	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
-    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Firefox */
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Safari Chrome */
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	margin: 10px;
 	color: #00560E;
 	-moz-transition: color 1s ease-in-out, background 1s ease-in-out;
@@ -80,36 +77,34 @@
 	-o-transition: color 1s ease-in-out, background 1s ease-in-out;
 	transition: color 1s ease-in-out, background 1s ease-in-out;
 }
-	
-.buttonw:hover{
+
+.form__button:hover {
 	border: 1px solid #CCCCCC;
 	border-radius:  5px;
 	width: 100px;
 	height: 30px;
 	font-weight: bold;
-	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
-    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
-	
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Firefox */
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Safari Chrome */
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	color: #000000;
 	background: #FF8C00;
-	
 	-moz-transition: color 1s ease-in-out, background 1s ease-in-out;
 	-webkit-transition: color 1s ease-in-out, background 1s ease-in-out;
 	-o-transition: color 1s ease-in-out, background 1s ease-in-out;
 	transition: color 1s ease-in-out, background 1s ease-in-out;
 }
 
-.asdasd:hover{
+.form__row:hover {
 	background: #D4FFD0;
 	border: 1px solid #D4FFD0;
 }
 
-.star{
+.form__star {
 	color: red;
 }
-	
-.errors{
+
+.form__errors {
 	color: #CD0000;
 	border: 3px solid #DE7A7B; 
 	background-color: #E6C0C0; 
@@ -119,7 +114,7 @@
 }
 
 /*TODO: Change style like in errors class, but green*/
-.success{
+.form__success {
 	color: #CD0000;
 	border: 3px solid #DE7A7B; 
 	background-color: #E6C0C0; 
