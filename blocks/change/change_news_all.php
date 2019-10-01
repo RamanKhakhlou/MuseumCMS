@@ -1,8 +1,8 @@
-<div id='titlesus'>
+<div class='info'>
 	<table>
 		<tr>
 			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
-			<td><span class='titlesus_h'>Менеджер новостей: редактировать новость</span></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ РЅРѕРІРѕСЃС‚РµР№: СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЅРѕРІРѕСЃС‚СЊ</span></td>
 		</tr>
 	</table>
 </div>
@@ -14,26 +14,25 @@
 			ShowErrors();
 			ShowSuccessMessage();
 		}
-		//Выборка всех царств
+
 		$sqlNews = "SELECT id, news FROM news";
 		$resultNews = mysql_query($sqlNews) or die(mysql_error());
 ?>
 		<form name = "changeNews" action = "index.php?actionChange=change_news_form" method = "POST">
-			<div id='cont'>
-				<fieldset class='fs'>
-					<legend><span class='legend'>Редактирование новости</span></legend>
+			<div class='form'>
+				<fieldset class='form__fieldset'>
+					<legend><span class='form__legend'>Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РЅРѕРІРѕСЃС‚Рё</span></legend>
 					<table>
 						<tr>
 							<td></td>
-							<td>Номер</td>
-							<td>Текст</td>
+							<td>РќРѕРјРµСЂ</td>
+							<td>РўРµРєСЃС‚</td>
 						</tr>
 					<?
 						$count = 1;
-						//Вывод всех имеющихся в БД царств 
 						while($rowNews = mysql_fetch_assoc($resultNews))
 						{
-							echo "<tr class='asdasd'>";
+							echo "<tr class='form__row'>";
 							echo "<td>";
 							echo "<input type = 'radio' name = 'selectedNews' value = {$rowNews['id']} ". ($count == 1 ? "checked>" : ">");
 							echo "</td>";
@@ -44,7 +43,7 @@
 					?>
 					</table>
 				</fieldset>
-				<input type = "submit" name = "Ok" value = "Выбрать" class="buttonw">
+				<input type = "submit" name = "Ok" value = "Р’С‹Р±СЂР°С‚СЊ" class='form__button'>
 			</div>
 		</form>
 <?
