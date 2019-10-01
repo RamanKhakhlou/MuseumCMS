@@ -1,1 +1,119 @@
-<?	if(isset($_SESSION['name']))	{		//Обработка данных и добавление их в БД		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Добавить")		{						$idKingdom = CleanData($_POST['kingdom'], 'i');			$idType = CleanData($_POST['type'], 'i');			$idClass = CleanData($_POST['class'], 'i');			$idDetachment = CleanData($_POST['detachment'], 'i');			$nameRus = CleanData($_POST['nameRus']);			$nameLat = CleanData($_POST['nameLat']);			if($nameRus != "" && $nameLat != "")			{				$result = AddFamily($idKingdom, $idType, $idClass, $idDetachment, $nameRus, $nameLat);								if(isset($result) && $result != false)				{					AddSuccessMessage("Запись о семействе успешно добавлена.");				}			}			AddErrors($nameRus, $nameLat);			?>			<script>museum.redirect("Add", "add_family")</script><?		}	}?><div id='titlesus'>	<table>		<tr>			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>			<td><span class='titlesus_h'>Менеджер экспонатов: добавить семейство</span></td>		</tr>	</table></div><?	if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] != "POST")		{			ShowErrors();			ShowSuccessMessage();		}		$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";		$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());		$sqlType = "SELECT id, namerus, namelat FROM tip";		$resultType = mysql_query($sqlType) or die(mysql_error());		$sqlClass = "SELECT id, namerus, namelat FROM klass";		$resultClass = mysql_query($sqlClass) or die(mysql_error());		$sqlDetachment = "SELECT id, namerus, namelat FROM otrjad";		$resultDetachment = mysql_query($sqlDetachment) or die(mysql_error());?>		<form name = "addDetachment" action = "index.php?actionAdd=add_family" method = "POST">			<div id='cont'>				<fieldset class='fs'>				<legend><span class='legend'>Добавление семейства</span></legend>				<table>					<tr class='asdasd'>						<td class='number1'>Царство</td>						<td><select name = "kingdom" class='ttext'>				<?					while($rowKingdom = mysql_fetch_assoc($resultKingdom))					{						echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";					}				?>				</select></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Тип</td>						<td><select name = "type" class='ttext'>				<?					while($rowType = mysql_fetch_assoc($resultType))					{						echo "<option value = {$rowType['id']}>{$rowType['namerus']} | {$rowType['namelat']}";					}				?>				</select></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Класс</td>						<td><select name = "class" class='ttext'>				<?					while($rowClass = mysql_fetch_assoc($resultClass))					{						echo "<option value = {$rowClass['id']}>{$rowClass['namerus']} | {$rowClass['namelat']}";					}				?>				</select></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Отряд</td>						<td><select name = "detachment" class='ttext'>				<?					while($rowDetachment = mysql_fetch_assoc($resultDetachment))					{						echo "<option value = {$rowDetachment['id']}>{$rowDetachment['namerus']} | {$rowDetachment['namelat']}";					}				?>				</select></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Русское название<span class='star'>*</span></td>						<td><input type = "text" name = "nameRus" class='ttext' required></td>					</tr>					<tr class='asdasd'>						<td class='number1' >Латинское название<span class='star'>*</span></td>						<td><input type = "text" name = "nameLat" class='ttext' required></td>					</tr>				</table>				</fieldset>				<input type = "submit" name = "add" value = "Добавить" class="buttonw">		</form>		</div><?	}?>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Р”РѕР±Р°РІРёС‚СЊ")
+		{			
+			$idKingdom = CleanData($_POST['kingdom'], 'i');
+			$idType = CleanData($_POST['type'], 'i');
+			$idClass = CleanData($_POST['class'], 'i');
+			$idDetachment = CleanData($_POST['detachment'], 'i');
+			$nameRus = CleanData($_POST['nameRus']);
+			$nameLat = CleanData($_POST['nameLat']);
+			if($nameRus != "" && $nameLat != "")
+			{
+				$result = AddFamily($idKingdom, $idType, $idClass, $idDetachment, $nameRus, $nameLat);
+				
+				if(isset($result) && $result != false)
+				{
+					AddSuccessMessage("Р—Р°РїРёСЃСЊ Рѕ СЃРµРјРµР№СЃС‚РІРµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.");
+				}
+			}
+			AddErrors($nameRus, $nameLat);
+			
+?>
+			<script>museum.redirect("Add", "add_family")</script>
+<?
+		}
+	}
+?>
+
+<div class='info'>
+	<table>
+		<tr>
+			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РґРѕР±Р°РІРёС‚СЊ СЃРµРјРµР№СЃС‚РІРѕ</span></td>
+		</tr>
+	</table>
+</div>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] != "POST")
+		{
+			ShowErrors();
+			ShowSuccessMessage();
+		}
+		$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";
+		$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());
+		$sqlType = "SELECT id, namerus, namelat FROM tip";
+		$resultType = mysql_query($sqlType) or die(mysql_error());
+		$sqlClass = "SELECT id, namerus, namelat FROM klass";
+		$resultClass = mysql_query($sqlClass) or die(mysql_error());
+		$sqlDetachment = "SELECT id, namerus, namelat FROM otrjad";
+		$resultDetachment = mysql_query($sqlDetachment) or die(mysql_error());
+?>
+		<form name = "addDetachment" action = "index.php?actionAdd=add_family" method = "POST">
+			<div id='form'>
+				<fieldset class='form__fieldset'>
+				<legend><span class='form__legend'>Р”РѕР±Р°РІР»РµРЅРёРµ СЃРµРјРµР№СЃС‚РІР°</span></legend>
+				<table>
+					<tr class='form__row'>
+						<td class='form__label'>Р¦Р°СЂСЃС‚РІРѕ</td>
+						<td><select name = "kingdom" class='form__input'>
+				<?
+					while($rowKingdom = mysql_fetch_assoc($resultKingdom))
+					{
+						echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";
+					}
+				?>
+				</select></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>РўРёРї</td>
+						<td><select name = "type" class='form__input'>
+				<?
+					while($rowType = mysql_fetch_assoc($resultType))
+					{
+						echo "<option value = {$rowType['id']}>{$rowType['namerus']} | {$rowType['namelat']}";
+					}
+				?>
+				</select></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>РљР»Р°СЃСЃ</td>
+						<td><select name = "class" class='form__input'>
+				<?
+					while($rowClass = mysql_fetch_assoc($resultClass))
+					{
+						echo "<option value = {$rowClass['id']}>{$rowClass['namerus']} | {$rowClass['namelat']}";
+					}
+				?>
+				</select></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>РћС‚СЂСЏРґ</td>
+						<td><select name = "detachment" class='form__input'>
+				<?
+					while($rowDetachment = mysql_fetch_assoc($resultDetachment))
+					{
+						echo "<option value = {$rowDetachment['id']}>{$rowDetachment['namerus']} | {$rowDetachment['namelat']}";
+					}
+				?>
+				</select></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>Р СѓСЃСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "nameRus" class='form__input' required></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label' >Р›Р°С‚РёРЅСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "nameLat" class='form__input' required></td>
+					</tr>
+				</table>
+				</fieldset>
+				<input type = "submit" name = "add" value = "Р”РѕР±Р°РІРёС‚СЊ" class="form__button">
+		</form>
+		</div>
+<?
+	}
+?>

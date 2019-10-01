@@ -1,35 +1,31 @@
 <?
-	//Выполняется добавление при передаче методом Post
 	if(isset($_SESSION['name']))
 	{
-		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Добавить")
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Р”РѕР±Р°РІРёС‚СЊ")
 		{
 			$nameRus = CleanData($_POST['nameRus']);
 			$nameLat = CleanData($_POST['nameLat']);
 			$description = CleanData($_POST['description']);
-			//Если основные поля заполнены
 			if($nameRus != "" && $nameLat != "")
 			{
-				//Добавление нового царства в БД
 				$result = AddKingdom($nameRus, $nameLat, $description);
 				
 				if(isset($result) && $result != false)
 				{
-					AddSuccessMessage("Запись о царстве успешно добавлена.");
+					AddSuccessMessage("Р—Р°РїРёСЃСЊ Рѕ С†Р°СЂСЃС‚РІРµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.");
 				}
 			}
-			//Вывод ошибок
 			AddErrors($nameRus, $nameLat);
 			
 			echo "<script>museum.redirect('Add', 'add_kingdom');</script>";
 		}
 	}
 ?>
-<div id='titlesus'>
+<div class='info'>
 <table>
 	<tr>
 		<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
-		<td><span class='titlesus_h'>Менеджер экспонатов: добавить царство</span></td>
+		<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РґРѕР±Р°РІРёС‚СЊ С†Р°СЂСЃС‚РІРѕ</span></td>
 	</tr>
 </table>
 </div>
@@ -43,25 +39,25 @@
 		}
 ?>
 		<form action = "index.php?actionAdd=add_kingdom" method = "POST" name = "addition">
-			<div id='cont'>
-				<fieldset class='fs'>
-				<legend><span class='legend'>Добавление царства</span></legend>
-				<table>
-				<tr tr class='asdasd'>
-					<td class='number1'>Русское название царства<span class='star'>*</span></td>
-					<td><input type = "text" name = "nameRus" class='ttext' required></td>
-				</tr>
-				<tr tr class='asdasd'>
-					<td class='number1'>Латинское название царства<span class='star'>*</span></td>
-					<td><input type = "text" name = "nameLat" class='ttext' required></td>
-				</tr>
-				<tr tr class='asdasd'>
-					<td class='number1'>Краткое описание</td>
-					<td><input type = "text" name = "description" class='ttext'></td>
-				</tr>
-			</table>
+			<div class='form'>
+				<fieldset class='form__fieldset'>
+					<legend><span class='form__legend'>Р”РѕР±Р°РІР»РµРЅРёРµ С†Р°СЂСЃС‚РІР°</span></legend>
+					<table>
+						<tr tr class='form__row'>
+							<td class='form__label'>Р СѓСЃСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С†Р°СЂСЃС‚РІР°<span class='form__star'>*</span></td>
+							<td><input type = "text" name = "nameRus" class='form__input' required></td>
+						</tr>
+						<tr tr class='form__row'>
+							<td class='form__label'>Р›Р°С‚РёРЅСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С†Р°СЂСЃС‚РІР°<span class='form__star'>*</span></td>
+							<td><input type = "text" name = "nameLat" class='form__input' required></td>
+						</tr>
+						<tr tr class='form__row'>
+							<td class='form__label'>РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ<</td>
+							<td><input type = "text" name = "description" class='form__input'></td>
+						</tr>
+					</table>
 				</fieldset>
-			<input type = "submit" value = "Добавить" name = "add" class="buttonw">
+			<input type = "submit" value = "Р”РѕР±Р°РІРёС‚СЊ" name = "add" class='form__button'>
 		</form>
 		</div>
 <?	

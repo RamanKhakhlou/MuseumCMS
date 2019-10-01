@@ -1,1 +1,76 @@
-<?	if(isset($_SESSION['name']))	{		//Обработка данных и добавление их в БД		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Добавить")		{			$idKingdom = CleanData($_POST['kingdom'], 'i');			$nameRus = CleanData($_POST['nameRus']);			$nameLat = CleanData($_POST['nameLat']);			if($nameRus != "" && $nameLat != "")			{				$result = AddType($idKingdom, $nameRus, $nameLat);								if(isset($result) && $result != false)				{									AddSuccessMessage("Запись о типе успешно добавлена.");				}			}			AddErrors($nameRus, $nameLat);						echo "<script>museum.redirect('Add', 'add_type');</script>";		}	}?><div id='titlesus'>	<table>		<tr>			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>			<td><span class='titlesus_h'>Менеджер экспонатов: добавить тип</span></td>		</tr>	</table></div><?	if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] != "POST")		{			ShowErrors();			ShowSuccessMessage();		}		$sql = "SELECT id, namerus, namelat FROM carstva";		$result = mysql_query($sql) or die(mysql_error());?>		<form name = "addType" action = "index.php?actionAdd=add_type" method = "POST">			<div id='cont'>				<fieldset class='fs'>				<legend><span class='legend'>Добавление экспоната</span></legend>				<table>					<tr class='asdasd'>						<td class='number1'>Царство</td>						<td><select name = "kingdom" class='ttext'>					<?					while($rowKingdom = mysql_fetch_assoc($result))					{						echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";					}					?>						</select></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Русское название<span class='star'>*</span></td>						<td><input type = "text" name = "nameRus" class='ttext' required></p></td>					</tr>					<tr class='asdasd'>						<td class='number1'>Латинское название<span class='star'>*</span></td>						<td><input type = "text" name = "nameLat" class='ttext' required></p></td>					</tr>				</table>				</fieldset>				<input type = "submit" value = "Добавить" name = "add" class="buttonw">					</form>		</div><?	}?>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Р”РѕР±Р°РІРёС‚СЊ")
+		{
+			$idKingdom = CleanData($_POST['kingdom'], 'i');
+			$nameRus = CleanData($_POST['nameRus']);
+			$nameLat = CleanData($_POST['nameLat']);
+			if($nameRus != "" && $nameLat != "")
+			{
+				$result = AddType($idKingdom, $nameRus, $nameLat);
+				
+				if(isset($result) && $result != false)
+				{
+				
+					AddSuccessMessage("Р—Р°РїРёСЃСЊ Рѕ С‚РёРїРµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.");
+				}
+			}
+			AddErrors($nameRus, $nameLat);
+			
+			echo "<script>museum.redirect('Add', 'add_type');</script>";
+		}
+	}
+?>
+<div class='info'>
+	<table>
+		<tr>
+			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РґРѕР±Р°РІРёС‚СЊ С‚РёРї</span></td>
+		</tr>
+	</table>
+</div>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] != "POST")
+		{
+			ShowErrors();
+			ShowSuccessMessage();
+		}
+		$sql = "SELECT id, namerus, namelat FROM carstva";
+		$result = mysql_query($sql) or die(mysql_error());
+?>
+		<form name = "addType" action = "index.php?actionAdd=add_type" method = "POST">
+			<div id='form'>
+				<fieldset class='form__fieldset'>
+				<legend><span class='form__legend'>Р”РѕР±Р°РІР»РµРЅРёРµ СЌРєСЃРїРѕРЅР°С‚</span></legend>
+				<table>
+					<tr class='form__row'>
+						<td class='form__label'>Р¦Р°СЂСЃС‚РІРѕ</td>
+						<td><select name = "kingdom" class='form__input'>
+					<?
+					while($rowKingdom = mysql_fetch_assoc($result))
+					{
+						echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";
+					}
+					?>
+						</select></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>Р СѓСЃСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "nameRus" class='form__input' required></p></td>
+					</tr>
+					<tr class='form__row'>
+						<td class='form__label'>Р›Р°С‚РёРЅСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "nameLat" class='form__input' required></p></td>
+					</tr>
+				</table>
+				</fieldset>
+				<input type = "submit" value = "Р”РѕР±Р°РІРёС‚СЊ" name = "add" class="form__button">
+			
+		</form>
+		</div>
+<?
+	}
+?>

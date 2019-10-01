@@ -1,8 +1,7 @@
 <?
 	if(isset($_SESSION['name']))
 	{
-		//Обработка данных и добавление их в БД
-		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Добавить")
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['add'] == "Р”РѕР±Р°РІРёС‚СЊ")
 		{
 			$idSpecies = CleanData($_POST['selectedSpecies'], 'i');
 			$count = CleanData($_POST['count'], 'i');
@@ -18,10 +17,8 @@
 			$passport = CleanData($_POST['passport']);
 			if(isset($count) && $inventoryNumber != "" && $dateAct != "" && $size != "" && $weight != "" && isset($passport))
 			{
-				//Проверка размера изображения и типа изображения
 				if($_FILES['photo']['size'] != 0 && $_FILES['photo']['size'] <= 1024000)
 				{
-					//Проверка типа изображения
 					if($_FILES['photo']['type'] == "image/jpeg")
 					{
 						$sqlSpecies = "SELECT namelat FROM vid WHERE id = {$idSpecies}";
@@ -33,14 +30,13 @@
 						$photoName = "[" . ++$exhibitId['id'] . "]{$species['namelat']}.jpg";
 						$uploaddir = 'image/exhibits/';
 						$uploadfile = $uploaddir . $photoName;
-						//Копирование изображения
 						move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);
 						
 						$result = AddExhibit($idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight, $findHistory, $makeMethod, $makePlace, $author, $history, $passport, $photoName);
 						
 						if(isset($result) && $result != false)
 						{
-							AddSuccessMessage('Запись об экспонате успешно добавлена.');
+							AddSuccessMessage('Р—Р°РїРёСЃСЊ РѕР± СЌРєСЃРїРѕРЅР°С‚Рµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.');
 						}
 					}
 				}
@@ -50,7 +46,7 @@
 					
 					if(isset($result) && $result != false)
 					{
-						AddSuccessMessage('Запись об экспонате успешно добавлена.');
+						AddSuccessMessage('Р—Р°РїРёСЃСЊ РѕР± СЌРєСЃРїРѕРЅР°С‚Рµ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°.');
 					}
 				}
 			}
@@ -68,11 +64,11 @@
 		}
 	}
 ?>
-<div id='titlesus'>
+<div class='info'>
 	<table>
 		<tr>
 			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
-			<td><span class='titlesus_h'>Менеджер экспонатов: добавить экспонат</span></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РґРѕР±Р°РІРёС‚СЊ СЌРєСЃРїРѕРЅР°С‚</span></td>
 		</tr>
 	</table>
 </div>
@@ -88,13 +84,13 @@
 		$resultSpecies = mysql_query($sqlSpecies) or die(mysql_error());
 ?>
 		<form action = "index.php?actionAdd=add_exhibit" method = "POST" name = "addition" enctype = "multipart/form-data">
-				<div id='cont'>
-				<fieldset class='fs'>
-				<legend><span class='legend'>Добавление экспоната</span></legend>
+				<div class='form'>
+				<fieldset class='form__fieldset'>
+				<legend><span class='form__legend'>Р”РѕР±Р°РІР»РµРЅРёРµ СЌРєСЃРїРѕРЅР°С‚Р°</span></legend>
 				<table>
-					<tr class='asdasd'>
-						<td class='number1'>Вид</td>
-						<td><select name = "selectedSpecies" class='ttext'>
+					<tr class='form__row'>
+						<td class='form__label'>Р’РёРґ</td>
+						<td><select name = "selectedSpecies" class='form__input'>
 							<?
 								while($rowSpecies = mysql_fetch_assoc($resultSpecies))
 								{
@@ -104,57 +100,57 @@
 
 							</select></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Количество<span class='star'>*</span></td>
-						<td><input type = "text" name = "count" class='ttext' required></td>
+					<tr class='form__row'>
+						<td class='form__label'>РљРѕР»РёС‡РµСЃС‚РІРѕ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "count" class='form__input' required></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Инвентарный номер<span class='star'>*</span></td>
-						<td><input type = "text" name = "inventoryNumber" class='ttext' required></td>
+					<tr class='form__row'>
+						<td class='form__label'>РРЅРІРµРЅС‚Р°СЂРЅС‹Р№ РЅРѕРјРµСЂ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "inventoryNumber" class='form__input' required></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Дата поступления<span class='star'>*</span></td>
-						<td><input type = "text" name = "dateAct" class='ttext' required></td>
+					<tr class='form__row'>
+						<td class='form__label'>Р”Р°С‚Р° РїРѕСЃС‚СѓРїР»РµРЅРёСЏ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "dateAct" class='form__input' required></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Размер<span class='star'>*</span></td>
-						<td><input type = "text" name = "size" class='ttext' required></td>
+					<tr class='form__row'>
+						<td class='form__label'>Р Р°Р·РјРµСЂ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "size" class='form__input' required></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Вес<span class='star'>*</span></td>
-						<td><input type = "text" name = "weight" class='ttext' required></td>
+					<tr class='form__row'>
+						<td class='form__label'>Р’РµСЃ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "weight" class='form__input' required></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Паспортный номер<span class='star'>*</span></td>
-						<td><input type = "text" name = "passport" class='ttext' required pattern="\d{1,6}"></td>
+					<tr class='form__row'>
+						<td class='form__label'>РџР°СЃРїРѕСЂС‚РЅС‹Р№ РЅРѕРјРµСЂ<span class='form__star'>*</span></td>
+						<td><input type = "text" name = "passport" class='form__input' required pattern="\d{1,6}"></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Автор</td>
-						<td><input type = "text" name = "author" class='ttext'></td>
+					<tr class='form__row'>
+						<td class='form__label'>РђРІС‚РѕСЂ</td>
+						<td><input type = "text" name = "author" class='form__input'></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Где и как обнаружен или пойман</td>
-						<td><input type = "text" name = "findHistory" class='ttext'></td>
+					<tr class='form__row'>
+						<td class='form__label'>Р“РґРµ Рё РєР°Рє РѕР±РЅР°СЂСѓР¶РµРЅ РёР»Рё РїРѕР№РјР°РЅ</td>
+						<td><input type = "text" name = "findHistory" class='form__input'></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Методика изготовления</td>
-						<td class='number11'><textarea name = "makeMethod" class='tarea'></textarea></td>
+					<tr class='form__row'>
+						<td class='form__label'>РњРµС‚РѕРґРёРєР° РёР·РіРѕС‚РѕРІР»РµРЅРёСЏ</td>
+						<td><textarea name = "makeMethod" class='form__area form__area--small'></textarea></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Место изготовления</td>
-						<td class='number11'><textarea name = "makePlace" class='tarea'></textarea>	</td>
+					<tr class='form__row'>
+						<td class='form__label'>РњРµСЃС‚Рѕ РёР·РіРѕС‚РѕРІР»РµРЅРёСЏ</td>
+						<td><textarea name = "makePlace" class='form__area form__area--small'></textarea></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>История экспоната</td>
-						<td class='number11'><textarea name = "history" class='tarea'></textarea></td>
+					<tr class='form__row'>
+						<td class='form__label'>РСЃС‚РѕСЂРёСЏ СЌРєСЃРїРѕРЅР°С‚Р°</td>
+						<td><textarea name = "history" class='form__area form__area--small'></textarea></td>
 					</tr>
-					<tr class='asdasd'>
-						<td class='number1'>Изображение</td>
-						<td><input type = "file" name = "photo" class='ttext'></td>
+					<tr class='form__row'>
+						<td class='form__label'>РР·РѕР±СЂР°Р¶РµРЅРёРµ</td>
+						<td><input type = "file" name = "photo" class='form__input'></td>
 					</tr>
 				</table>
 				</fieldset>
-					<input type = "submit" value = "Добавить" name = "add" class="buttonw">
+					<input type = "submit" value = "Р”РѕР±Р°РІРёС‚СЊ" name = "add" class='form__button'>
 				</form>
 				</div>
 <?
