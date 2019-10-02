@@ -1,1 +1,90 @@
-<?		if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Изменить")		{			//Очистка переданых данных			$idKingdom = CleanData($_POST['kingdom'], 'i');			$nameRus = CleanData($_POST['nameRus']);			$nameLat = CleanData($_POST['nameLat']);			$id = CleanData($_POST['id'], 'i');			//Внесение изменений в БД			if($nameRus != "" && $nameLat != "")			{				$result = ChangeType($id, $idKingdom, $nameRus, $nameLat);								if(isset($result) && $result != false)				{					AddSuccessMessage("Запись о типе успешно изменена.");				}			}						AddErrors($nameRus, $nameLat);?>			<script>museum.redirect('Change', 'change_type_all');</script><?		}	}?><div id='titlesus'>	<table>		<tr>			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>			<td><span class='titlesus_h'>Менеджер экспонатов: изменить тип</span></td>		</tr>	</table></div><?	if(isset($_SESSION['name']))	{		//Заполнение полей формы текущими значениями		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Выбрать")		{			$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";			$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());			$id = CleanData($_POST["typeSelected"], 'i');			$sqlType = "SELECT id, idcar, namerus, namelat FROM tip WHERE id = {$id}";			$resultType = mysql_query($sqlType) or die(mysql_error());				$type = mysql_fetch_assoc($resultType);	?>			<form name = "changeType" action = "index.php?actionChange=change_type_form" method = "POST">				<div id='cont'>					<fieldset class='fs'>						<legend><span class='legend'>Изменение типа</span></legend>						<table>								<tr class='asdasd'>								<td class='number1'>Царство</td>								<td>									<select name = "kingdom" class='ttext'>									<?										while($rowKingdom = mysql_fetch_assoc($resultKingdom))										{											if($type['idcar'] == $rowKingdom['id'])											{												echo "<option value = {$rowKingdom['id']} selected>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";											}											else											{												echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";											}										}									?>									</select>								</td>							</tr>							<tr class='asdasd'>								<td class='number1'>Русское название типа<span class='star'>*</span></td>								<td><input type = "text" name = "nameRus" value = "<?=$type['namerus']?>" class='ttext' required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Латинское название типа<span class='star'>*</span></td>								<td><input type = "text" name = "nameLat" value = "<?=$type['namelat']?>" class='ttext' required></td>							</tr>						</table>					</fieldset>					<input type = "hidden" name = "id" value = "<?=$id?>">					<input type = "submit" name = "Ok" value = "Изменить" class="buttonw">					<input type = "button" name = "back" value = "Назад" class="buttonw" onclick = "museum.redirect('Change', 'change_type_all')">				</div>			</form><?		}	}?>
+<?	
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "РР·РјРµРЅРёС‚СЊ")
+		{
+			$idKingdom = CleanData($_POST['kingdom'], 'i');
+			$nameRus = CleanData($_POST['nameRus']);
+			$nameLat = CleanData($_POST['nameLat']);
+			$id = CleanData($_POST['id'], 'i');
+			if($nameRus != "" && $nameLat != "")
+			{
+				$result = ChangeType($id, $idKingdom, $nameRus, $nameLat);
+				
+				if(isset($result) && $result != false)
+				{
+					AddSuccessMessage("Р—Р°РїРёСЃСЊ Рѕ С‚РёРїРµ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°.");
+				}
+			}
+			
+			AddErrors($nameRus, $nameLat);
+?>
+			<script>museum.redirect('Change', 'change_type_all');</script>
+<?
+		}
+	}
+?>
+<div class='info'>
+	<table>
+		<tr>
+			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РёР·РјРµРЅРёС‚СЊ С‚РёРї</span></td>
+		</tr>
+	</table>
+</div>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Р’С‹Р±СЂР°С‚СЊ")
+		{
+			$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";
+			$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());
+			$id = CleanData($_POST["typeSelected"], 'i');
+			$sqlType = "SELECT id, idcar, namerus, namelat FROM tip WHERE id = {$id}";
+			$resultType = mysql_query($sqlType) or die(mysql_error());	
+			$type = mysql_fetch_assoc($resultType);	
+?>
+			<form name = "changeType" action = "index.php?actionChange=change_type_form" method = "POST">
+				<div id='form'>
+					<fieldset class='form__fieldset'>
+						<legend><span class='form__legend'>РР·РјРµРЅРµРЅРёРµ С‚РёРїР°</span></legend>
+						<table>	
+							<tr class='form__row'>
+								<td class='form__label'>Р¦Р°СЂСЃС‚РІРѕ</td>
+								<td>
+									<select name = "kingdom" class='form__input'>
+									<?
+										while($rowKingdom = mysql_fetch_assoc($resultKingdom))
+										{
+											if($type['idcar'] == $rowKingdom['id'])
+											{
+												echo "<option value = {$rowKingdom['id']} selected>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";
+											}
+											else
+											{
+												echo "<option value = {$rowKingdom['id']}>{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";
+											}
+										}
+									?>
+									</select>
+								</td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р СѓСЃСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С‚РёРїР°<span class='form__star'>*</span></td>
+								<td><input type = "text" name = "nameRus" value = "<?=$type['namerus']?>" class='form__input' required></td>
+							</tr>
+							<tr class='form__rowrowrow'>
+								<td class='form__label'>Р›Р°С‚РёРЅСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С‚РёРїР°<span class='form__star'>*</span></td>
+								<td><input type = "text" name = "nameLat" value = "<?=$type['namelat']?>" class='form__input' required></td>
+							</tr>
+						</table>
+					</fieldset>
+					<input type = "hidden" name = "id" value = "<?=$id?>">
+					<input type = "submit" name = "Ok" value = "РР·РјРµРЅРёС‚СЊ" class="form__button">
+					<input type = "button" name = "back" value = "РќР°Р·Р°Рґ" class="form__button" onclick = "museum.redirect('Change', 'change_type_all')">
+				</div>
+			</form>
+<?
+		}
+	}
+?>

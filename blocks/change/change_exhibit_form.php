@@ -1,1 +1,168 @@
-<?		if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Изменить")		{			//Очистка переданых данных			$idSpecies = CleanData($_POST['selectedSpecies'], 'i');			$count = CleanData($_POST['count'], 'i');			$inventoryNumber = CleanData($_POST['inventoryNumber']);			$dateAct = CleanData($_POST['dateAct']);			$size = CleanData($_POST['size']);			$weight = CleanData($_POST['weight']);			$findHistory = CleanData($_POST['findHistory']);			$makeMethod = CleanData($_POST['makeMethod']);			$makePlace = CleanData($_POST['makePlace']);			$author = CleanData($_POST['author']);			$history = CleanData($_POST['history']);			$passport = CleanData($_POST['passport'], 'i');			$id = CleanData($_POST['id'], 'i');			if(isset($count) && $inventoryNumber != "" && $dateAct != "" && $size != "" && $weight != "" && isset($passport))			{				//Проверка размера изображения и типа изображения				if($_FILES['photo']['size'] != 0 && $_FILES['photo']['size'] <= 1024000)				{					//Проверка типа изображения					if($_FILES['photo']['type'] == "image/jpeg")					{						$sqlSpecies = "SELECT namelat FROM vid WHERE id = {$idSpecies}";						$resultSpecies = mysql_query($sqlSpecies) or die(mysql_error());						$species = mysql_fetch_assoc($resultSpecies);						$photoName = "[". $id . "]{$species['namelat']}.jpg";						$uploaddir = 'image/exhibits/';						$uploadfile = $uploaddir . $photoName;						//Копирование изображения						move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);												$result = ChangeExhibit($id, $idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight,	$findHistory, $makeMethod, $makePlace, $author, $history, $passport, $photoName);												if(isset($result) && $result != false)						{							AddSuccessMessage("Запись об экспонате успешно изменена.");						}					}				}				if($_FILES['photo']['name'] == "")				{					$result = ChangeExhibit($id, $idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight, $findHistory, $makeMethod, $makePlace, $author, $history, $passport);										if(isset($result) && $result != false)					{						AddSuccessMessage("Запись об экспонате успешно изменена.");					}				}			}			if($_FILES['photo']['name'] == "")			{				AddErrorsForExhibit($count, $inventoryNumber, $dateAct, $size, $weight, $passport);			}			else			{				AddErrorsForExhibit($count, $inventoryNumber, $dateAct, $size, $weight, $passport, $_FILES['photo']['size'], $_FILES['photo']['type']);			}			?>			<script>museum.redirect('Change', 'change_exhibit_all');</script><?		}	}?><div id='titlesus'>	<table>		<tr>			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>			<td><span class='titlesus_h'>Менеджер экспонатов: изменить экспонат</span></td>		</tr>	</table></div><?		if(isset($_SESSION['name']))	{		//Заполнение полей формы текущими значениями		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Выбрать")		{			$sqlSpecies = "SELECT id, namerus, namelat FROM vid";			$resultSpecies = mysql_query($sqlSpecies);			$id = CleanData($_POST["exhibitSelected"], 'i');			$sqlExhibit = "SELECT id, vid, kol, invnom, datpost, razm, ves, ist, mtizg, mvizg, autor, hisexp, pasport, photoname FROM eksponat WHERE id = {$id}";			$resultExhibit = mysql_query($sqlExhibit) or die(mysql_error());			$exhibit = mysql_fetch_assoc($resultExhibit);?>			<form name = "changeExhibit" action = "index.php?actionChange=change_exhibit_form" method = "POST" enctype = "multipart/form-data">				<div id='cont'>					<fieldset class='fs'>						<legend><span class='legend'>Изменение экспоната</span></legend>						<table>								<tr class='asdasd'>								<td class='number1'>Вид</td>								<td>									<select name = "selectedSpecies" class='ttext'>									<?										while($rowSpecies = mysql_fetch_assoc($resultSpecies))										{											echo "<option value = {$rowSpecies['id']} " . ($rowSpecies['id'] == $exhibit['vid'] ? "selected>" : ">") . "{$rowSpecies['namerus']} | {$rowSpecies['namelat']}\n";										}									?>									</select>								</td>							</tr>							<tr class='asdasd'>								<td class='number1'>Количество<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "count" value = "<?=$exhibit['kol']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Инвентарный номер<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "inventoryNumber" value = "<?=$exhibit['invnom']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Дата поступления<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "dateAct" value = "<?=$exhibit['datpost']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Размер<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "size" value = "<?=$exhibit['razm']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Вес<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "weight" value = "<?=$exhibit['ves']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Где и как обнаружен или пойман</td>								<td><input type = "text" class='ttext' name = "findHistory" value = "<?=$exhibit['ist']?>"></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Автор</td>								<td><input type = "text" class='ttext' name = "author" value = "<?=$exhibit['autor']?>"></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Паспортный номер<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "passport" value = <?=$exhibit['pasport']?> required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Методика изготовления</td>								<td><textarea class='tarea' name = "makeMethod"><?=$exhibit['mtizg']?></textarea></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Место изготовления</td>								<td><textarea class='tarea' name = "makePlace"><?=$exhibit['mvizg']?></textarea></td>							</tr>														<tr class='asdasd'>								<td class='number1'>История данного экспоната, до поступления в музей</td>								<td><textarea  class='tarea' name = "history"><?=$exhibit['hisexp']?></textarea></td>							</tr>														<tr class='asdasd'>								<td align='center' colspan="2"><img src = "image/exhibits/<?= $exhibit['photoname']?>" alt = "<?= $exhibit['namelat']?>" width = "200" height = "150"></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Новое изображение</td>								<td><input type = "file" name = "photo"></td>							</tr>						</table>					</fieldset>					<input type = "hidden" name = "id" value = "<?=$id?>">					<input type = "submit" name = "Ok" value = "Изменить" class="buttonw">					<input type = "button" name = "back" value = "Назад" class="buttonw" onclick = "museum.redirect('Change', 'change_exhibit_all')">				</div>			</form><?		}	}?>
+<?	
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "РР·РјРµРЅРёС‚СЊ")
+		{
+			$idSpecies = CleanData($_POST['selectedSpecies'], 'i');
+			$count = CleanData($_POST['count'], 'i');
+			$inventoryNumber = CleanData($_POST['inventoryNumber']);
+			$dateAct = CleanData($_POST['dateAct']);
+			$size = CleanData($_POST['size']);
+			$weight = CleanData($_POST['weight']);
+			$findHistory = CleanData($_POST['findHistory']);
+			$makeMethod = CleanData($_POST['makeMethod']);
+			$makePlace = CleanData($_POST['makePlace']);
+			$author = CleanData($_POST['author']);
+			$history = CleanData($_POST['history']);
+			$passport = CleanData($_POST['passport'], 'i');
+			$id = CleanData($_POST['id'], 'i');
+			if(isset($count) && $inventoryNumber != "" && $dateAct != "" && $size != "" && $weight != "" && isset($passport))
+			{
+				if($_FILES['photo']['size'] != 0 && $_FILES['photo']['size'] <= 1024000)
+				{
+					if($_FILES['photo']['type'] == "image/jpeg")
+					{
+						$sqlSpecies = "SELECT namelat FROM vid WHERE id = {$idSpecies}";
+						$resultSpecies = mysql_query($sqlSpecies) or die(mysql_error());
+						$species = mysql_fetch_assoc($resultSpecies);
+						$photoName = "[". $id . "]{$species['namelat']}.jpg";
+						$uploaddir = 'image/exhibits/';
+						$uploadfile = $uploaddir . $photoName;
+						move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);
+						
+						$result = ChangeExhibit($id, $idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight,	$findHistory, $makeMethod, $makePlace, $author, $history, $passport, $photoName);
+						
+						if(isset($result) && $result != false)
+						{
+							AddSuccessMessage("Р—Р°РїРёСЃСЊ РѕР± СЌРєСЃРїРѕРЅР°С‚Рµ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°.");
+						}
+					}
+				}
+				if($_FILES['photo']['name'] == "")
+				{
+					$result = ChangeExhibit($id, $idSpecies, $count, $inventoryNumber, $dateAct, $size, $weight, $findHistory, $makeMethod, $makePlace, $author, $history, $passport);
+					
+					if(isset($result) && $result != false)
+					{
+						AddSuccessMessage("Р—Р°РїРёСЃСЊ РѕР± СЌРєСЃРїРѕРЅР°С‚Рµ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°.");
+					}
+				}
+			}
+			if($_FILES['photo']['name'] == "")
+			{
+				AddErrorsForExhibit($count, $inventoryNumber, $dateAct, $size, $weight, $passport);
+			}
+			else
+			{
+				AddErrorsForExhibit($count, $inventoryNumber, $dateAct, $size, $weight, $passport, $_FILES['photo']['size'], $_FILES['photo']['type']);
+			}
+			
+?>
+			<script>museum.redirect('Change', 'change_exhibit_all');</script>
+<?
+		}
+	}
+?>
+
+<div class='info'>
+	<table>
+		<tr>
+			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
+			<td><span class='info__titlee'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РёР·РјРµРЅРёС‚СЊ СЌРєСЃРїРѕРЅР°С‚</span></td>
+		</tr>
+	</table>
+</div>
+<?	
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Р’С‹Р±СЂР°С‚СЊ")
+		{
+			$sqlSpecies = "SELECT id, namerus, namelat FROM vid";
+			$resultSpecies = mysql_query($sqlSpecies);
+			$id = CleanData($_POST["exhibitSelected"], 'i');
+			$sqlExhibit = "SELECT id, vid, kol, invnom, datpost, razm, ves, ist, mtizg, mvizg, autor, hisexp, pasport, photoname FROM eksponat WHERE id = {$id}";
+			$resultExhibit = mysql_query($sqlExhibit) or die(mysql_error());
+			$exhibit = mysql_fetch_assoc($resultExhibit);
+?>
+			<form name = "changeExhibit" action = "index.php?actionChange=change_exhibit_form" method = "POST" enctype = "multipart/form-data">
+				<div id='form'>
+					<fieldset class='form__fieldsetrm__fieldset'>
+						<legend><span class='form__legend'>РР·РјРµРЅРµРЅРёРµ СЌРєСЃРїРѕРЅР°С‚Р°</span></legend>
+						<table>	
+							<tr class='form__row'>
+								<td class='form__label'>Р’РёРґ</td>
+								<td>
+									<select name = "selectedSpecies" class='form__input'>
+									<?
+										while($rowSpecies = mysql_fetch_assoc($resultSpecies))
+										{
+											echo "<option value = {$rowSpecies['id']} " . ($rowSpecies['id'] == $exhibit['vid'] ? "selected>" : ">") . "{$rowSpecies['namerus']} | {$rowSpecies['namelat']}\n";
+										}
+									?>
+									</select>
+								</td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РљРѕР»РёС‡РµСЃС‚РІРѕ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "count" value = "<?=$exhibit['kol']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РРЅРІРµРЅС‚Р°СЂРЅС‹Р№ РЅРѕРјРµСЂ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "inventoryNumber" value = "<?=$exhibit['invnom']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р”Р°С‚Р° РїРѕСЃС‚СѓРїР»РµРЅРёСЏ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input_input' name = "dateAct" value = "<?=$exhibit['datpost']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р Р°Р·РјРµСЂ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "size" value = "<?=$exhibit['razm']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р’РµСЃ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "weight" value = "<?=$exhibit['ves']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р“РґРµ Рё РєР°Рє РѕР±РЅР°СЂСѓР¶РµРЅ РёР»Рё РїРѕР№РјР°РЅ</td>
+								<td><input type = "text" class='form__input' name = "findHistory" value = "<?=$exhibit['ist']?>"></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РђРІС‚РѕСЂ</td>
+								<td><input type = "text" class='form__input' name = "author" value = "<?=$exhibit['autor']?>"></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РџР°СЃРїРѕСЂС‚РЅС‹Р№ РЅРѕРјРµСЂ<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "passport" value = <?=$exhibit['pasport']?> required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РњРµС‚РѕРґРёРєР° РёР·РіРѕС‚РѕРІР»РµРЅРёСЏ</td>
+								<td><textarea class='form__area' name = "makeMethod"><?=$exhibit['mtizg']?></textarea></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РњРµСЃС‚Рѕ РёР·РіРѕС‚РѕРІР»РµРЅРёСЏ</td>
+								<td><textarea class='form__area' name = "makePlace"><?=$exhibit['mvizg']?></textarea></td>
+							</tr>
+							
+							<tr class='form__row'>
+								<td class='form__label'>РСЃС‚РѕСЂРёСЏ РґР°РЅРЅРѕРіРѕ СЌРєСЃРїРѕРЅР°С‚Р°, РґРѕ РїРѕСЃС‚СѓРїР»РµРЅРёСЏ РІ РјСѓР·РµР№</td>
+								<td><textarea  class='form__area' name = "history"><?=$exhibit['hisexp']?></textarea></td>
+							</tr>
+							
+							<tr class='form__row'>
+								<td align='center' colspan="2"><img src = "image/exhibits/<?= $exhibit['photoname']?>" alt = "<?= $exhibit['namelat']?>" width = "200" height = "150"></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РќРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ</td>
+								<td><input type = "file" name = "photo"></td>
+							</tr>
+						</table>
+					</fieldset>
+					<input type = "hidden" name = "id" value = "<?=$id?>">
+					<input type = "submit" name = "Ok" value = "РР·РјРµРЅРёС‚СЊ" class="form__button">
+					<input type = "button" name = "back" value = "РќР°Р·Р°Рґ" class="form__button" onclick = "museum.redirect('Change', 'change_exhibit_all')">
+				</div>
+			</form>
+<?
+		}
+	}
+?>

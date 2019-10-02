@@ -1,1 +1,146 @@
-<?	if(isset($_SESSION['name']))	{		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Изменить")		{			//Очистка переданых данных			$idKingdom = CleanData($_POST['kingdom'], 'i');			$idType = CleanData($_POST['type'], 'i');			$idClass = CleanData($_POST['class'], 'i');			$nameRus = CleanData($_POST['nameRus']);			$nameLat = CleanData($_POST['nameLat']);			$id = CleanData($_POST['id'], 'i');			//Внесение изменений в БД			if($nameRus != "" && $nameLat != "")			{				//Проверка размера изображения				if($_FILES['photo']['size'] != 0 && $_FILES['photo']['size'] <= 1024000)				{					//Проверка типа изображения					if($_FILES['photo']['type'] == "image/jpeg")					{						$photoName = $nameLat.".jpg";						$uploaddir = 'image/detachments/';						$uploadfile = $uploaddir . $photoName;						//Копирование изображения						move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);							$result = ChangeDetachment($id, $idKingdom, $idType, $idClass, $nameRus, $nameLat, $photoName);						if(isset($result) && $result != false)						{							AddSuccessMessage("Запись об отряде успешно изменена.");						}					}				}				if($_FILES['photo']['name'] == "")				{					$result = ChangeDetachment($id, $idKingdom, $idType, $idClass, $nameRus, $nameLat);										if(isset($result) && $result != false)					{						AddSuccessMessage("Запись об отряде успешно изменена.");					}				}			}				if($_FILES['photo']['name'] == "")			{				AddErrors($nameRus, $nameLat);			}			else			{				AddErrors($nameRus, $nameLat, $_FILES['photo']['size'], $_FILES['photo']['type']);			}?>			<script>museum.redirect('Change', 'change_detachment_all');</script><?		}	}?><div id='titlesus'>	<table>		<tr>			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>			<td><span class='titlesus_h'>Менеджер экспонатов: изменить отряд</span></td>		</tr>	</table></div><?		if(isset($_SESSION['name']))	{		//Заполнение полей формы текущими значениями		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Выбрать")		{			$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";			$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());			$sqlType = "SELECT id, namerus, namelat FROM tip";			$resultType = mysql_query($sqlType) or die(mysql_error());			$sqlClass = "SELECT id, namerus, namelat FROM klass";			$resultClass = mysql_query($sqlClass) or die(mysql_error());			$id = CleanData($_POST["detachmentSelected"], 'i');			$sqlDetachment = "SELECT id, idcar, idtip, idklass, namerus, namelat, photoname FROM otrjad WHERE id = {$id}";			$resultDetachment = mysql_query($sqlDetachment) or die(mysql_error());				$detachment = mysql_fetch_assoc($resultDetachment);	?>			<form name = "changeType" action = "index.php?actionChange=change_detachment_form" method = "POST" enctype = "multipart/form-data">				<div id='cont'>					<fieldset class='fs'>						<legend><span class='legend'>Изменение отряда</span></legend>						<table>								<tr class='asdasd'>								<td class='number1'>Царство</td>								<td>									<select name = "kingdom" class='ttext'>									<?										while($rowKingdom = mysql_fetch_assoc($resultKingdom))										{											echo "<option value = {$rowKingdom['id']}" . ($detachment['idcar'] == $rowKingdom['id'] ? "selected>" : ">") . "{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";										}									?>									</select>								</td>							</tr>							<tr class='asdasd'>								<td class='number1'>Тип</td>								<td>									<select name = "type" class='ttext'>									<?										while($rowType = mysql_fetch_assoc($resultType))										{											echo "<option value = {$rowType['id']}" . ($detachment['idtip'] == $rowType['id'] ? "selected>" : ">") . "{$rowType['namerus']} | {$rowType['namelat']}";										}									?>									</select>								</td>							</tr>							<tr class='asdasd'>								<td class='number1'>Класс</td>								<td>									<select name = "class" class='ttext'>									<?										while($rowClass = mysql_fetch_assoc($resultClass))										{											echo "<option value = {$rowClass['id']}" . ($detachment['idklass'] == $rowClass['id'] ? "selected>" : ">") . "{$rowClass['namerus']} | {$rowClass['namelat']}";										}									?>									</select>								</td>							</tr>							<tr class='asdasd'>								<td class='number1'>Русское название типа<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "nameRus" value = "<?=$detachment['namerus']?>" required></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Латинское название типа<span class='star'>*</span></td>								<td><input type = "text" class='ttext' name = "nameLat" value = "<?=$detachment['namelat']?>" required></td>							</tr>							<tr class='asdasd'>							<td align='center' colspan="2"><img src = "image/detachments/<?= $detachment['photoname']?>" alt = "<?= $detachment['namelat']?>" width = "200" height = "150"></td>							</tr>							<tr class='asdasd'>								<td class='number1'>Новое изображение</td>								<td><input type = "file" name = "photo"></td>							</tr>						</table>					</fieldset>					<input type = "hidden" name = "id" value = "<?=$id?>">					<input type = "submit" name = "Ok" value = "Изменить" class="buttonw">					<input type = "button" name = "back" value = "Назад" class="buttonw" onclick = "museum.redirect('Change', 'change_detachment_all')">				</div>			</form><?		}	}?>
+<?
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "РР·РјРµРЅРёС‚СЊ")
+		{
+			$idKingdom = CleanData($_POST['kingdom'], 'i');
+			$idType = CleanData($_POST['type'], 'i');
+			$idClass = CleanData($_POST['class'], 'i');
+			$nameRus = CleanData($_POST['nameRus']);
+			$nameLat = CleanData($_POST['nameLat']);
+			$id = CleanData($_POST['id'], 'i');
+			if($nameRus != "" && $nameLat != "")
+			{
+				if($_FILES['photo']['size'] != 0 && $_FILES['photo']['size'] <= 1024000)
+				{
+					if($_FILES['photo']['type'] == "image/jpeg")
+					{
+						$photoName = $nameLat.".jpg";
+						$uploaddir = 'image/detachments/';
+						$uploadfile = $uploaddir . $photoName;
+						move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);	
+						$result = ChangeDetachment($id, $idKingdom, $idType, $idClass, $nameRus, $nameLat, $photoName);
+						if(isset($result) && $result != false)
+						{
+							AddSuccessMessage("Р—Р°РїРёСЃСЊ РѕР± РѕС‚СЂСЏРґРµ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°.");
+						}
+					}
+				}
+				if($_FILES['photo']['name'] == "")
+				{
+					$result = ChangeDetachment($id, $idKingdom, $idType, $idClass, $nameRus, $nameLat);
+					
+					if(isset($result) && $result != false)
+					{
+						AddSuccessMessage("Р—Р°РїРёСЃСЊ РѕР± РѕС‚СЂСЏРґРµ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°.");
+					}
+				}
+			}	
+			if($_FILES['photo']['name'] == "")
+			{
+				AddErrors($nameRus, $nameLat);
+			}
+			else
+			{
+				AddErrors($nameRus, $nameLat, $_FILES['photo']['size'], $_FILES['photo']['type']);
+			}
+?>
+			<script>museum.redirect('Change', 'change_detachment_all');</script>
+<?
+		}
+	}
+?>
+<div class='info'>
+	<table>
+		<tr>
+			<td><img src='image/system/add_data.png' width='37px' height='40px' class='add_data'></td>
+			<td><span class='info__title'>РњРµРЅРµРґР¶РµСЂ СЌРєСЃРїРѕРЅР°С‚РѕРІ: РёР·РјРµРЅРёС‚СЊ РѕС‚СЂСЏРґ</span></td>
+		</tr>
+	</table>
+</div>
+<?	
+	if(isset($_SESSION['name']))
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['Ok'] == "Р’С‹Р±СЂР°С‚СЊ")
+		{
+			$sqlKingdom = "SELECT id, namerus, namelat FROM carstva";
+			$resultKingdom = mysql_query($sqlKingdom) or die(mysql_error());
+			$sqlType = "SELECT id, namerus, namelat FROM tip";
+			$resultType = mysql_query($sqlType) or die(mysql_error());
+			$sqlClass = "SELECT id, namerus, namelat FROM klass";
+			$resultClass = mysql_query($sqlClass) or die(mysql_error());
+			$id = CleanData($_POST["detachmentSelected"], 'i');
+			$sqlDetachment = "SELECT id, idcar, idtip, idklass, namerus, namelat, photoname FROM otrjad WHERE id = {$id}";
+			$resultDetachment = mysql_query($sqlDetachment) or die(mysql_error());	
+			$detachment = mysql_fetch_assoc($resultDetachment);	
+?>
+			<form name = "changeType" action = "index.php?actionChange=change_detachment_form" method = "POST" enctype = "multipart/form-data">
+				<div id='form'>
+					<fieldset class='form__fieldset'>
+						<legend><span class='form__legend'>РР·РјРµРЅРµРЅРёРµ РѕС‚СЂСЏРґР°</span></legend>
+						<table>	
+							<tr class='form__row'>
+								<td class='form__label'>Р¦Р°СЂСЃС‚РІРѕ</td>
+								<td>
+									<select name = "kingdom" class='form__input'>
+									<?
+										while($rowKingdom = mysql_fetch_assoc($resultKingdom))
+										{
+											echo "<option value = {$rowKingdom['id']}" . ($detachment['idcar'] == $rowKingdom['id'] ? "selected>" : ">") . "{$rowKingdom['namerus']} | {$rowKingdom['namelat']}";
+										}
+									?>
+									</select>
+								</td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РўРёРї</td>
+								<td>
+									<select name = "type" class='form__input'>
+									<?
+										while($rowType = mysql_fetch_assoc($resultType))
+										{
+											echo "<option value = {$rowType['id']}" . ($detachment['idtip'] == $rowType['id'] ? "selected>" : ">") . "{$rowType['namerus']} | {$rowType['namelat']}";
+										}
+									?>
+									</select>
+								</td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РљР»Р°СЃСЃ</td>
+								<td>
+									<select name = "class" class='form__input'>
+									<?
+										while($rowClass = mysql_fetch_assoc($resultClass))
+										{
+											echo "<option value = {$rowClass['id']}" . ($detachment['idklass'] == $rowClass['id'] ? "selected>" : ">") . "{$rowClass['namerus']} | {$rowClass['namelat']}";
+										}
+									?>
+									</select>
+								</td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р СѓСЃСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С‚РёРїР°<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "nameRus" value = "<?=$detachment['namerus']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>Р›Р°С‚РёРЅСЃРєРѕРµ РЅР°Р·РІР°РЅРёРµ С‚РёРїР°<span class='form__star'>*</span></td>
+								<td><input type = "text" class='form__input' name = "nameLat" value = "<?=$detachment['namelat']?>" required></td>
+							</tr>
+							<tr class='form__row'>
+							<td align='center' colspan="2"><img src = "image/detachments/<?= $detachment['photoname']?>" alt = "<?= $detachment['namelat']?>" width = "200" height = "150"></td>
+							</tr>
+							<tr class='form__row'>
+								<td class='form__label'>РќРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ</td>
+								<td><input type = "file" name = "photo"></td>
+							</tr>
+						</table>
+					</fieldset>
+					<input type = "hidden" name = "id" value = "<?=$id?>">
+					<input type = "submit" name = "Ok" value = "РР·РјРµРЅРёС‚СЊ" class="form__button">
+					<input type = "button" name = "back" value = "РќР°Р·Р°Рґ" class="form__button" onclick = "museum.redirect('Change', 'change_detachment_all')">
+				</div>
+			</form>
+<?
+		}
+	}
+?>
